@@ -1,0 +1,19 @@
+# Nix/direnv
+.envrc
+.direnv/
+result
+result-*
+
+# Cabal/GHC build artifacts
+dist-newstyle/
+.ghc.environment.*
+
+# Haskell Language Server & Tools
+.hie/
+hie.yaml
+tags
+
+# Profiling and logs
+*.hp
+*.prof
+*.log
