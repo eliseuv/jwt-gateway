@@ -69,6 +69,7 @@ library
     exposed-modules:  MyLib
                       Domain.Token
                       Domain.Parser
+                      Domain.Verify
 
     -- Modules included in this library but not exported.
     -- other-modules:
