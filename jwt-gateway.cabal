@@ -78,6 +78,7 @@ library
 
     -- Other library packages from which modules are imported.
     build-depends:    base >= 4.15,
+                      extra,
                       aeson,
                       crypton,
                       lens,
@@ -109,6 +110,7 @@ executable jwt-gateway
     -- Other library packages from which modules are imported.
     build-depends:
         base >= 4.15,
+        extra,
         jwt-gateway,
         warp,
         http-types,
