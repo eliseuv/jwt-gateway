@@ -60,6 +60,7 @@ common extensions
         GADTs
         TemplateHaskell
         RecordWildCards
+        LambdaCase
 
 library
     -- Import common warning flags.
@@ -125,7 +126,7 @@ executable jwt-gateway
 
 test-suite jwt-gateway-test
     -- Import common warning flags.
-    import:           warnings
+    import:           warnings, extensions
 
     -- Base language which the package is written in.
     default-language: GHC2021
@@ -143,9 +144,17 @@ test-suite jwt-gateway-test
     hs-source-dirs:   test
 
     -- The entrypoint to the test suite.
-    main-is:          Main.hs
+    main-is:          Spec.hs
+
+    other-modules:    Domain.ParserSpec
+                      Domain.VerifySpec
 
     -- Test dependencies.
     build-depends:
         base >= 4.15,
-        jwt-gateway
+        jwt-gateway,
+        hspec,
+        text,
+        bytestring,
+        megaparsec,
+        aeson
