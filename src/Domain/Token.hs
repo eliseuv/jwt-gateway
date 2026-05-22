@@ -92,10 +92,11 @@ extractClaims payloadBytes =
     mapLeft JsonDecodeError (eitherDecodeStrict payloadBytes)
 
 -- | Token verification
-verifyToken :: Jwt 'Unverified -> Either VerifyError (Jwt 'Verified)
-verifyToken unverifiedToken = do
+verifyToken :: Integer -> Jwt 'Unverified -> Either VerifyError (Jwt 'Verified)
+verifyToken currentTime unverifiedToken = do
     (_, payloadBytes, _, _) <- extractAndDecode unverifiedToken
     claims <- extractClaims payloadBytes
     -- TODO: Verify signature
-    -- TODO: Check expiration date
-    Right (ValidTokenInternal claims)
+    if _claimsExp claims < currentTime
+        then Left TokenExpired
+        else Right (ValidTokenInternal claims)

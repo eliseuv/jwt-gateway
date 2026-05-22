@@ -32,8 +32,9 @@ spec = describe "Domain.Token" $ do
             -- We obtain a verified token through the official verifyToken function
             -- (using a mock payload that satisfies the verification logic)
             let unverified = RawToken (T.pack validHeader) (T.pack validPayload) (T.pack validSignature)
+            let currentTime = 1600000000 -- Before expiration (1700000000)
 
-            case verifyToken unverified of
+            case verifyToken currentTime unverified of
                 Right verifiedToken ->
                     case verifiedToken of
                         ValidToken claims -> do
@@ -41,6 +42,15 @@ spec = describe "Domain.Token" $ do
                             _claimsExp claims `shouldBe` 1700000000
                             _claimsIss claims `shouldBe` "gateway"
                 Left err -> expectationFailure $ "Verification failed: " <> show err
+
+        it "fails with TokenExpired if the expiration date has passed" $ do
+            let unverified = RawToken (T.pack validHeader) (T.pack validPayload) (T.pack validSignature)
+            let currentTime = 1800000000 -- After expiration (1700000000)
+
+            case verifyToken currentTime unverified of
+                Left TokenExpired -> return ()
+                Left err -> expectationFailure $ "Failed with wrong error: " <> show err
+                Right _ -> expectationFailure "Expected verification to fail due to expiration, but it succeeded"
 
         -- Note: It is impossible to construct a verified token directly because
         -- ValidToken is a unidirectional pattern synonym.
