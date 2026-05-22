@@ -61,6 +61,7 @@ common extensions
         TemplateHaskell
         RecordWildCards
         LambdaCase
+        PatternSynonyms
 
 library
     -- Import common warning flags.
@@ -70,7 +71,6 @@ library
     exposed-modules:  MyLib
                       Domain.Token
                       Domain.Parser
-                      Domain.Verify
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -146,8 +146,8 @@ test-suite jwt-gateway-test
     -- The entrypoint to the test suite.
     main-is:          Spec.hs
 
-    other-modules:    Domain.ParserSpec
-                      Domain.VerifySpec
+    other-modules:    Domain.TokenSpec
+                      Domain.ParserSpec
 
     -- Test dependencies.
     build-depends:

@@ -6,11 +6,14 @@ import Domain.Token (Jwt (RawToken))
 import Test.Hspec
 
 spec :: Spec
-spec = describe "Domain.Parser.parseJwtHeader" $ do
+spec = describe "Domain.Parser" $ do
     it "successfully parses a valid 3-part Bearer token" $ do
         let input = "Bearer header123.payload456.sig789"
         case parseJwtHeader input of
-            Right (RawToken txt) -> txt `shouldBe` "header123.payload456.sig789"
+            Right (RawToken h p s) -> do
+                h `shouldBe` "header123"
+                p `shouldBe` "payload456"
+                s `shouldBe` "sig789"
             Left _ -> expectationFailure "Expected successful parse"
 
     it "fails if the 'Bearer ' prefix is missing" $ do

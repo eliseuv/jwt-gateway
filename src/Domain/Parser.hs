@@ -35,16 +35,16 @@ jwtParser :: Parser (Jwt 'Unverified)
 jwtParser = do
     _ <- string "Bearer "
 
-    (rawToken, _) <- match $ do
-        let part = takeWhile1P (Just "base64url component") isBase64UrlChar
-        _ <- part
-        _ <- char '.'
-        _ <- part
-        _ <- char '.'
-        _ <- part
-        return ()
+    let part = takeWhile1P (Just "base64url component") isBase64UrlChar
 
-    return (RawToken rawToken)
+    hdr <- part
+    _ <- char '.'
+    pay <- part
+    _ <- char '.'
+    sig <- part
+
+    return (RawToken hdr pay sig)
+
 
 -- Entry point
 parseJwtHeader :: Text -> Either (ParseErrorBundle Text Void) (Jwt 'Unverified)
