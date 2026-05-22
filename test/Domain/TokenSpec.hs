@@ -17,9 +17,6 @@ validPayload = "eyJzdWIiOiJ1c2VyXzEyMyIsImV4cCI6MTcwMDAwMDAwMCwiaXNzIjoiZ2F0ZXdh
 validSignature :: String
 validSignature = "c2lnbmF0dXJl"
 
-validTokenString :: String
-validTokenString = validHeader <> "." <> validPayload <> "." <> validSignature
-
 spec :: Spec
 spec = describe "Domain.Token" $ do
     describe "Token construction and pattern matching" $ do

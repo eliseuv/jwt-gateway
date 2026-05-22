@@ -20,7 +20,7 @@ import Data.ByteArray.Encoding (Base (Base64URLUnpadded), convertFromBase)
 import Data.ByteString (ByteString)
 import Data.Char (toLower)
 import Data.Either.Extra (mapLeft)
-import Data.Text (Text, splitOn)
+import Data.Text (Text)
 import Data.Text.Encoding (encodeUtf8)
 import GHC.Generics (Generic)
 
@@ -62,6 +62,8 @@ without allowing direct construction.
 -}
 pattern ValidToken :: Claims -> Jwt 'Verified
 pattern ValidToken c <- ValidTokenInternal c
+
+{-# COMPLETE ValidToken #-}
 
 data VerifyError
     = Base64DecodeError String

@@ -41,9 +41,7 @@ jwtParser = do
     _ <- char '.'
     pay <- part
     _ <- char '.'
-    sig <- part
-
-    return (RawToken hdr pay sig)
+    RawToken hdr pay <$> part
 
 
 -- Entry point
